@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+site 'http://community.opscode.com/api/v1'
+
+cookbook 'apt', :git => 'https://github.com/seanculver/apt.git'
+cookbook 'git'
+
+#databases
+#cookbook 'database'
+cookbook 'mysql'
+cookbook 'postgresql'
+#cookbook 'mongodb'
+
+cookbook 'rvm', :git => 'https://github.com/seanculver/chef-rvm.git'
+
+#Requirements for running headless cucumber
+cookbook 'qt', :git => 'https://github.com/seanculver/cookbook-qt.git'
+cookbook 'xvfb', :git => 'https://github.com/seanculver/cookbook-xvfb.git'
+
+#requirement to use zeus - https://github.com/burke/zeus
+cookbook 'nfs'
