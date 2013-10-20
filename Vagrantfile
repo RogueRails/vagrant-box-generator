@@ -43,9 +43,18 @@ Vagrant.configure("2") do |config|
         version: "9.3",
         enable_pgdg_apt: true,
         password: {
-            postgres: 'postgres'
+            postgres: 'password'
+        },
+        dir: "/etc/postgresql/9.3/main",
+        config: {
+          data_directory: "/var/lib/postgresql/9.3/main",
+          hba_file: "/etc/postgresql/9.3/main/pg_hba.conf",
+          ident_file: "/etc/postgresql/9.3/main/pg_ident.conf",
+          external_pid_file: "/var/run/postgresql/9.3-main.pid",
+          ssl_key_file: "/etc/ssl/private/ssl-cert-snakeoil.key",
+          ssl_cert_file: "/etc/ssl/certs/ssl-cert-snakeoil.pem",
+          listen_addresses: "*"
         }
-
       }
     }
   end
