@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-  config.vm.network :forwarded_port, guest: 5432, host: 5432
+  config.vm.network :forwarded_port, guest: 3306, host: 3306
   config.vm.network :forwarded_port, guest: 3000, host: 3000
   config.vm.network :private_network, ip: "192.168.10.10"
   config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", nfs: true 
@@ -22,7 +22,8 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "git"
     chef.add_recipe "xvfb"
     chef.add_recipe "qt"
-    chef.add_recipe "postgresql::server"
+    chef.add_recipe "mysql"
+    chef.add_recipe "mysql::server"
     chef.json = {
       rvm: {
         group_users: ["vagrant"],
@@ -39,21 +40,12 @@ Vagrant.configure("2") do |config|
           }
         ]
       },
-      postgresql: {
-        version: "9.3",
-        enable_pgdg_apt: true,
-        password: {
-            postgres: 'password'
-        },
-        dir: "/etc/postgresql/9.3/main",
-        config: {
-          data_directory: "/var/lib/postgresql/9.3/main",
-          hba_file: "/etc/postgresql/9.3/main/pg_hba.conf",
-          ident_file: "/etc/postgresql/9.3/main/pg_ident.conf",
-          external_pid_file: "/var/run/postgresql/9.3-main.pid",
-          ssl_key_file: "/etc/ssl/private/ssl-cert-snakeoil.key",
-          ssl_cert_file: "/etc/ssl/certs/ssl-cert-snakeoil.pem",
-          listen_addresses: "*"
+      mysql: {
+        server_root_password: "",
+        server_repl_password: "",
+        server_debian_password: "",
+        client: { 
+          packages: ["mysql-client", "libmysqlclient-dev","ruby-mysql"] 
         }
       }
     }
